@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { handleEvent } from "../utils";
-import "./style.sass"
+import "./style.sass";
+
 const API = "https://jsonplaceholder.typicode.com/users";
+
+function renderObject(obj) {
+  return (
+    <ul>
+      {Object.entries(obj).map(([key, value]) => (
+        <li key={key}>
+          <strong>{key}:</strong>{" "}
+          {typeof value === "object" && value !== null
+            ? renderObject(value)
+            : value?.toString()}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default function RUD() {
   const [list, setList] = useState([]);
@@ -19,26 +35,25 @@ export default function RUD() {
   const handleItemDelete = async (id) => {
     try {
       await fetch(`${API}/${id}`, { method: "DELETE" });
-      setList((prevState) => prevState.filter((item) => item.id !== id));
+      setList((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleItemUpdate = async (item) => {
+  const handleItemUpdate = async (updatedItem) => {
     try {
-      const request = await fetch(`${API}/${item.id}`, {
+      const request = await fetch(`${API}/${updatedItem.id}`, {
         method: "PATCH",
-        body: JSON.stringify(item),
+        body: JSON.stringify(updatedItem),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const response = await request.json();
-
-      setList((prevState) =>
-        prevState.map((element) =>
-          element.id === response.id ? response : element
+      setList((prev) =>
+        prev.map((item) =>
+          item.id === response.id ? response : item
         )
       );
     } catch (error) {
@@ -54,22 +69,29 @@ export default function RUD() {
     <ul className="list">
       {list.map((item) => (
         <li key={item.id} className="list__item">
-          <span>{item.name}</span>
-          <button className="list__item-delete-btn"
-            onClick={(event) => handleEvent(event, handleItemDelete, [item.id])}
-          >
-            Delete
-          </button>
+          <div className="list__item-object">{renderObject(item)}</div>
+
           <input
             type="text"
             className="list__item-input"
-            placeholder={item.name}
+            value={item.name}
             onChange={(event) =>
               handleItemUpdate({ ...item, name: event.target.value })
             }
-          ></input>
+          />
+
+          <button
+            className="list__item-delete-btn"
+            onClick={(event) =>
+              handleEvent(event, handleItemDelete, [item.id])
+            }
+          >
+            Delete
+          </button>
         </li>
       ))}
     </ul>
-  ) : null;
+  ) : (
+    <p>Loading...</p>
+  );
 }
