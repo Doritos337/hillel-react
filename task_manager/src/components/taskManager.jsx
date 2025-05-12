@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import TaskCreate from '../components/taskCreate/taskCreate';
-import TaskList from '../components/taskList/taskList';
-import { useTasks } from '../hooks/useTasks';
-import "./taskManager.scss"
+import React, { useState } from "react";
+import TaskCreate from "../components/taskCreate/taskCreate";
+import TaskList from "../components/taskList/taskList";
+import { useTasks } from "../hooks/useTasks";
+import "./taskManager.scss";
 
 const TaskManager = () => {
   const [list, setList] = useState([]);
@@ -10,7 +10,9 @@ const TaskManager = () => {
 
   return (
     <div className="task-manager">
-      <TaskCreate onCreate={(newTask) => setList(prev => [...prev, newTask])} />
+      <TaskCreate
+        onCreate={(newTask) => setList((prev) => [...prev, newTask])}
+      />
       <TaskList list={list} setList={setList} />
     </div>
   );
