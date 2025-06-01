@@ -1,7 +1,6 @@
-import React from 'react'
+import React from "react";
+import FooterDetail from "../../components/footer/FooterDetail";
 
 export default function Footer() {
-  return (
-    <div>Footer</div>
-  )
+  return <FooterDetail></FooterDetail>;
 }

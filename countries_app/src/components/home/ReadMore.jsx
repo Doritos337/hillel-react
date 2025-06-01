@@ -7,20 +7,19 @@ export default function ReadMore({ country }) {
   if (!country) return null;
 
   return (
-    <div className="selected-country">
-      <div className="country-preview">
+    <div className="bg-white rounded-xl shadow-md p-6">
+      <div className="flex items-center space-x-4 mb-4">
         <img 
           src={country.flag} 
           alt={`Flag of ${country.name}`} 
-          width={40}
-          height={30}
+          className="w-16 h-12 object-cover border"
         />
-        <span>{country.name}</span>
+        <span className="text-xl font-medium">{country.name}</span>
       </div>
       
       <button 
-        className="read-more-btn"
         onClick={() => navigate(`/country/${country.name}`)}
+        className="w-full py-3 px-4 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors duration-200"
       >
         Read more about {country.name}
       </button>

@@ -3,6 +3,7 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom"
 import HomeRoute from './routes/HomeRoute'
 import { CountriesProvider } from '../src/context/CountriesDataContext'
 import CountriesListRoute from './routes/CountriesListRoute'
+import CountryDetailsRoute from './routes/CountryDetailsRoute'
 import ErrorRoute from './routes/ErrorRoute'
 import Layout from './pages/layout/layout'
 function App() {
@@ -20,6 +21,10 @@ function App() {
         {
           path: "/countries",
           element: <CountriesListRoute></CountriesListRoute>,
+        },
+        {
+          path: "/country/:name",
+          element: <CountryDetailsRoute />,
         },
       ]
     }
