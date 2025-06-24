@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
-import Header from "../Header/Header";
+import Header from "../header/header";
 
 function PrivateRoute() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
